@@ -29,6 +29,7 @@ import { MongoURI, Secret } from "../config/config.js";
 // Import Routes
 import indexRouter from './routes/index.route.server.js';
 import movieRouter from './routes/movies.route.server.js';
+import authRouter from './routes/auth.route.server.js';
 
 // instantiate app-server
 const app = express();
@@ -70,11 +71,12 @@ app.use(passport.session());
 passport.use(User.createStrategy());
 
 // Auth step 8 - Setup Serialization and deserialization
-passport.serializeUser(user.serializeUser());
-passport.deserializeUser(user.deserializeUser());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 // Use Routes
 app.use('/', indexRouter);
 app.use('/', movieRouter);
+app.use('/', authRouter);
 
 // // run app
 // app.listen(3000);
